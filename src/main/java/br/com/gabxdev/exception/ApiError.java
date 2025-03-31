@@ -1,8 +1,6 @@
 package br.com.gabxdev.exception;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.OffsetDateTime;
 

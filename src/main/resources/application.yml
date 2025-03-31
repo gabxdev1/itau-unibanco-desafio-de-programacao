@@ -19,6 +19,9 @@ spring:
       ddl-auto: update
   flyway:
     enabled: false
+  jackson:
+    time-zone: UTC
+
 logging:
   level:
     br.com.gabxdev: debug

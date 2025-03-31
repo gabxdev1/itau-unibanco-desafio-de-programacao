@@ -1,10 +1,12 @@
 services:
   mysql:
     image: mysql:8.0.41-debian
-    container_name: mysql
+    container_name: itau-desafio-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: ${TIME_ZONE}
+    command: --default-time-zone='+00:00'
     ports:
       - "3306:3306"
     volumes:

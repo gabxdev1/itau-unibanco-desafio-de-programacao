@@ -2,6 +2,7 @@ package br.com.gabxdev.controller;
 
 import br.com.gabxdev.mapper.TransacaoMapper;
 import br.com.gabxdev.request.TransacaoPostRequest;
+import br.com.gabxdev.response.EstatisticaGetResponse;
 import br.com.gabxdev.service.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,14 @@ public class TransacaoController {
         service.deleteAll();
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/estatistica")
+    public ResponseEntity<EstatisticaGetResponse> ReportEstatisticaTransacao() {
+        log.debug("Report estatistica request");
+
+        var estatisticaGetResponse = service.reportEstatistica();
+
+        return ResponseEntity.ok(estatisticaGetResponse);
     }
 }

@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -26,6 +24,5 @@ public class Transacao {
     private BigDecimal valor;
 
     @Column(nullable = false)
-    @CreationTimestamp(source = SourceType.DB)
     private OffsetDateTime dataHora;
 }
