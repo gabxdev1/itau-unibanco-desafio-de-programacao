@@ -26,7 +26,7 @@ public class TransacaoService {
     public EstatisticaGetResponse reportEstatistica(Long ultimosSegundos) {
         var estatisticas = repository.getEstatistica(OffsetDateTime.now().minusMinutes(ultimosSegundos));
 
-        if (estatisticas.sum().equals(BigDecimal.ZERO)) {
+        if (estatisticas.count() == 0) {
             return EstatisticaGetResponse.builder()
                     .count(0L)
                     .sum(BigDecimal.ZERO)

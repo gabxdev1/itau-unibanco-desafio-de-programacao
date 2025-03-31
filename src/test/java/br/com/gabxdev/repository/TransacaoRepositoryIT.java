@@ -52,7 +52,7 @@ class TransacaoRepositoryIT {
         transacaoUtils.initTransacaoData(transacoes);
 
         var timeLimit = fixedNow.minusSeconds(60L);
-        
+
         var doubleSummaryStatistics = transacoes.stream()
                 .filter(t -> !t.getDataHora().isBefore(timeLimit))
                 .flatMapToDouble(t -> DoubleStream.of(t.getValor().doubleValue()))

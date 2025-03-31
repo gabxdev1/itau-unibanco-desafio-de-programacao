@@ -13,6 +13,7 @@ import java.time.OffsetDateTime;
 @Entity
 @Builder
 @ToString
+@With
 public class Transacao {
 
     @Id

@@ -1,11 +1,12 @@
 package br.com.gabxdev.response;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.With;
 
 import java.math.BigDecimal;
 
 @Builder
+@With
 public record EstatisticaGetResponse(
         Long count,
 
