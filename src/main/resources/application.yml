@@ -17,6 +17,8 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+  flyway:
+    enabled: false
 logging:
   level:
     br.com.gabxdev: debug
