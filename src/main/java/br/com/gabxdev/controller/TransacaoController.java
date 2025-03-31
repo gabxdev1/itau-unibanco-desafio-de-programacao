@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.OffsetDateTime;
+
 @RestController
 @RequestMapping("/transacao")
 @RequiredArgsConstructor
@@ -42,10 +44,10 @@ public class TransacaoController {
     }
 
     @GetMapping("/estatistica")
-    public ResponseEntity<EstatisticaGetResponse> ReportEstatisticaTransacao() {
+    public ResponseEntity<EstatisticaGetResponse> ReportEstatisticaTransacao(@RequestParam(required = false, defaultValue = "60") Long ultimosSegundos) {
         log.debug("Report estatistica request");
 
-        var estatisticaGetResponse = service.reportEstatistica();
+        var estatisticaGetResponse = service.reportEstatistica(ultimosSegundos);
 
         return ResponseEntity.ok(estatisticaGetResponse);
     }

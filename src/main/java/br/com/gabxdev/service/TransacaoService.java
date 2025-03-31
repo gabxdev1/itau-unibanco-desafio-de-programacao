@@ -23,8 +23,8 @@ public class TransacaoService {
         repository.deleteAll();
     }
 
-    public EstatisticaGetResponse reportEstatistica() {
-        var estatisticas = repository.getEstatistica(OffsetDateTime.now().minusMinutes(1L));
+    public EstatisticaGetResponse reportEstatistica(Long ultimosSegundos) {
+        var estatisticas = repository.getEstatistica(OffsetDateTime.now().minusMinutes(ultimosSegundos));
 
         if (estatisticas.sum().equals(BigDecimal.ZERO)) {
             return EstatisticaGetResponse.builder()
