@@ -1,20 +1,14 @@
 spring:
-  config:
-    import: optional:classpath:.env[.properties]
   application:
     name: Itau Unibanco - Desafio de Programacao
   threads:
     virtual:
       enabled: true
-  datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useTimezone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
     hibernate:
       ddl-auto: validate
   flyway:

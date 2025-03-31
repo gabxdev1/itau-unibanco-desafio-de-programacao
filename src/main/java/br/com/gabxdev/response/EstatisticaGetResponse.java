@@ -1,6 +1,7 @@
 package br.com.gabxdev.response;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 
