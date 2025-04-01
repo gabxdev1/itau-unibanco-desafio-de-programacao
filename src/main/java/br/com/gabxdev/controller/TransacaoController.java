@@ -33,7 +33,7 @@ public class TransacaoController {
     @Operation(
             summary = "Creates a new transaction",
             description = "This endpoint creates a new transaction. The transaction is saved to the database.",
-            tags = { "Transactions" }
+            tags = {"Transactions"}
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -72,7 +72,7 @@ public class TransacaoController {
     @Operation(
             summary = "Delete all transactions",
             description = "This endpoint deletes all transactions from the database.\n",
-            tags = { "Transactions" }
+            tags = {"Transactions"}
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -97,7 +97,7 @@ public class TransacaoController {
     @Operation(
             summary = "Transaction Statistics Report",
             description = "This endpoint returns statistics of transactions made in the last X seconds. If no parameter is provided, the default value is 60 seconds.",
-            tags = { "Statistics" }
+            tags = {"Statistics"}
     )
     @ApiResponses(value = {
             @ApiResponse(

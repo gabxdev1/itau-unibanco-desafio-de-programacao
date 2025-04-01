@@ -4,5 +4,5 @@ public class Constants {
 
     public static final String BASE_URL = "http://localhost";
 
-    public static final String TRANSACAO_PATH = "/transacao";
+    public static final String TRANSACAO_PATH = "/transacoes";
 }
