@@ -1,5 +1,6 @@
 package br.com.gabxdev.service;
 
+import br.com.gabxdev.commons.ClockProvider;
 import br.com.gabxdev.commons.TransacaoUtils;
 import br.com.gabxdev.model.Transacao;
 import br.com.gabxdev.repository.TransacaoRepository;
@@ -31,6 +32,9 @@ class TransacaoServiceTest {
     private TransacaoRepository repository;
 
     private List<Transacao> transacoes;
+
+    @Mock
+    private ClockProvider clockProvider;
 
     @Test
     @DisplayName("save creates a transacao")
@@ -73,6 +77,7 @@ class TransacaoServiceTest {
                 .build();
 
         BDDMockito.when(repository.getEstatistica(BDDMockito.any())).thenReturn(response);
+        BDDMockito.when(clockProvider.now()).thenReturn(OffsetDateTime.now());
 
         var estatisticaGetResponse = service.reportEstatistica(60L);
 
@@ -93,6 +98,7 @@ class TransacaoServiceTest {
                 .build();
 
         BDDMockito.when(repository.getEstatistica(BDDMockito.any())).thenReturn(EstatisticaGetResponse.builder().build().withCount(0L));
+        BDDMockito.when(clockProvider.now()).thenReturn(OffsetDateTime.now());
 
         var estatisticas = service.reportEstatistica(60L);
 
