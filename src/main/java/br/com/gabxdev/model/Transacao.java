@@ -14,6 +14,7 @@ import java.time.OffsetDateTime;
 @Builder
 @ToString
 @With
+@EqualsAndHashCode(of = "id")
 public class Transacao {
 
     @Id

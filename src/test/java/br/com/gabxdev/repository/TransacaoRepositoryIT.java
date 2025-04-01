@@ -2,6 +2,7 @@ package br.com.gabxdev.repository;
 
 import br.com.gabxdev.commons.TransacaoUtils;
 import br.com.gabxdev.config.TestcontainersConfig;
+import br.com.gabxdev.config.TimeZoneConfig;
 import br.com.gabxdev.response.EstatisticaGetResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({TestcontainersConfig.class, TransacaoUtils.class})
+@Import({TestcontainersConfig.class, TransacaoUtils.class, TimeZoneConfig.class})
 @ActiveProfiles("testIT")
 @Sql(scripts = "/sql/transacao/reset_table_transacao.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class TransacaoRepositoryIT {
@@ -33,7 +34,7 @@ class TransacaoRepositoryIT {
     private TransacaoUtils transacaoUtils;
 
     @Test
-    @DisplayName("getEstatistica returns empty Object when no transacoes.")
+    @DisplayName("GET /transacao returns empty Object when no transacoes.")
     void getEstatistica_ReturnsEmptyObject_WhenNoTransacoes() {
         var estatisticas = repository.getEstatistica(OffsetDateTime.now().minusYears(10L));
 

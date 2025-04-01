@@ -1,5 +1,6 @@
 package br.com.gabxdev.controller;
 
+import br.com.gabxdev.commons.Constants;
 import br.com.gabxdev.mapper.TransacaoMapperImpl;
 import br.com.gabxdev.repository.TransacaoRepository;
 import br.com.gabxdev.request.TransacaoPostRequest;
@@ -26,12 +27,12 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static br.com.gabxdev.commons.Constants.TRANSACAO_PATH;
+
 
 @WebMvcTest(controllers = TransacaoController.class)
 @Import({TransacaoMapperImpl.class, TransacaoService.class, TransacaoRepository.class})
 class TransacaoControllerTest {
-
-    private final String URL = "/transacao";
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,14 +48,14 @@ class TransacaoControllerTest {
 
     @ParameterizedTest
     @MethodSource("postTransacaoUnprocessableEntitySource")
-    @DisplayName("POST /transacao returns Unprocessable Entity when fields are invalid or data invalid.")
-    void save_ReturnsUnprocessableEntity_WhenFieldsAreInvalidOrDataInvalid(TransacaoPostRequest transacaoToSave, List<String> errorsMessages) throws Exception {
-        var userJsonToSave = mapper.writeValueAsString(transacaoToSave);
+    @DisplayName("POST /transacao Throws Unprocessable Entity when fields are invalid or data invalid.")
+    void postTransacao_ThrowsUnprocessableEntity_WhenFieldsAreInvalidOrDataInvalid(TransacaoPostRequest transacaoToSave, List<String> errorsMessages) throws Exception {
+        var transacaoToSaveJson = mapper.writeValueAsString(transacaoToSave);
 
         var mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                        .post(URL)
+                        .post(TRANSACAO_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(userJsonToSave))
+                        .content(transacaoToSaveJson))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
                 .andReturn();

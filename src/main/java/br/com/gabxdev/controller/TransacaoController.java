@@ -33,7 +33,7 @@ public class TransacaoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteTransacao() {
+    public ResponseEntity<Void> deleteAllTransacao() {
         log.debug("Delete transacao request");
 
         service.deleteAll();
@@ -42,7 +42,7 @@ public class TransacaoController {
     }
 
     @GetMapping("/estatistica")
-    public ResponseEntity<EstatisticaGetResponse> ReportEstatisticaTransacao(@RequestParam(required = false, defaultValue = "60") Long ultimosSegundos) {
+    public ResponseEntity<EstatisticaGetResponse> reportEstatisticaTransacao(@RequestParam(required = false, defaultValue = "60") Long ultimosSegundos) {
         log.debug("Report estatistica request");
 
         var estatisticaGetResponse = service.reportEstatistica(ultimosSegundos);

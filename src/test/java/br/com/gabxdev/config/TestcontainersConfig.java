@@ -14,7 +14,11 @@ public class TestcontainersConfig {
     private static final MySQLContainer<?> MYSQL_CONTAINER;
 
     static {
-        MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0.41-debian")).withDatabaseName("desafio-itau");
+        MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0.41-debian"))
+                .withDatabaseName("desafio-itau")
+                .withEnv("TZ", "UTC")
+                .withUrlParam("useTimezone", "true")
+                .withUrlParam("serverTimezone", "UTC");
         MYSQL_CONTAINER.start();
     }
 
