@@ -1,0 +1,170 @@
+openapi: 3.1.0
+info:
+  title: Itaú Unibanco - Desafio de Programação
+  contact:
+    name: Gabriel Oliveira Durães
+    url: https://gabxdev.com.br
+    email: bielepicgame14@gmail.com
+  version: V1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /transacoes:
+    post:
+      tags:
+        - Transactions
+      summary: Creates a new transaction
+      description: This endpoint creates a new transaction. The transaction is saved
+        to the database.
+      operationId: postTransacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransacaoPostRequest"
+        required: true
+      responses:
+        "201":
+          description: Transaction created successfully.
+        "400":
+          description: "Invalid request, with invalid transaction data or incorrect\
+            \ json."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "422":
+          description: Incorrect or invalid data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    delete:
+      tags:
+        - Transactions
+      summary: Delete all transactions
+      description: |
+        This endpoint deletes all transactions from the database.
+      operationId: deleteAllTransacao
+      responses:
+        "200":
+          description: All transactions have been deleted successfully.
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /transacoes/estatistica:
+    get:
+      tags:
+        - Statistics
+      summary: Transaction Statistics Report
+      description: "This endpoint returns statistics of transactions made in the last\
+        \ X seconds. If no parameter is provided, the default value is 60 seconds."
+      operationId: reportEstatisticaTransacao
+      parameters:
+        - name: ultimosSegundos
+          in: query
+          description: "Number of seconds to filter transactions, with a default value\
+          \ of 60."
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 60
+      responses:
+        "200":
+          description: Statistics report returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstatisticaGetResponse"
+        "400":
+          description: Invalid 'ultimosSegundos' parameter.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+components:
+  schemas:
+    TransacaoPostRequest:
+      type: object
+      description: Details of the transaction to be created.
+      properties:
+        valor:
+          type: number
+          description: Transaction amount.
+          example: 32.14
+          minimum: 0
+        dataHora:
+          type: string
+          format: date-time
+          description: Transaction date and time.
+          example: 2020-08-07T12:34:56.789-03:00
+      required:
+        - dataHora
+        - valor
+    ApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: UTC date and time the error occurred.
+          example: 2025-04-01T00:47:40.1489206Z
+        status:
+          type: integer
+          format: int32
+          description: HTTP Status.
+          example: 400
+        error:
+          type: string
+          description: Error occurred.
+          example: Bad Request
+        message:
+          type: string
+          description: Brief error reason message.
+          example: JSON parse error
+        path:
+          type: string
+          description: Request path
+          example: /transacao
+    EstatisticaGetResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: Number of transactions.
+          example: 10
+        sum:
+          type: number
+          description: Sum of transaction amounts.
+          example: 3212.55
+        avg:
+          type: number
+          format: double
+          description: Average amount of the transfers <3212.55/10>
+          example: "321,255"
+        min:
+          type: number
+          description: Min
+          example: "321,255"
+        max:
+          type: number
+          description: Max
+          example: "321,255"

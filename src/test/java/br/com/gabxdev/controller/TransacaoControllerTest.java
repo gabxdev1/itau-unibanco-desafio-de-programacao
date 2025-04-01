@@ -1,6 +1,5 @@
 package br.com.gabxdev.controller;
 
-import br.com.gabxdev.commons.Constants;
 import br.com.gabxdev.mapper.TransacaoMapperImpl;
 import br.com.gabxdev.repository.TransacaoRepository;
 import br.com.gabxdev.request.TransacaoPostRequest;
