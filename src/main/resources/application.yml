@@ -24,3 +24,19 @@ spring:
 logging:
   level:
     br.com.gabxdev: debug
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    info:
+      show-details: always
+
+springdoc:
+  show-actuator: true
