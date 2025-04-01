@@ -18,8 +18,12 @@ services:
     image: prom/prometheus:v2.53.4
     container_name: itau-desafio-prometheus
     restart: always
+    depends_on:
+      - itau-desafio-app
     ports:
       - "9090:9090"
+    environment:
+      TZ: UTC
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
@@ -29,6 +33,8 @@ services:
     image: grafana/grafana:11.6.0
     container_name: itau-desafio-grafana
     restart: always
+    depends_on:
+      - prometheus
     ports:
       - "3000:3000"
     environment:
@@ -37,11 +43,31 @@ services:
       GF_USERS_ALLOW_SIGN_UP: false
       GF_PROVISIONING_DATASOURCES_DEFAULT_UID: prometheus_ds
       DS_PROMETHEUS: prometheus_ds
+      TZ: UTC
     volumes:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
       - grafana-data-itau:/var/lib/grafana
+    networks:
+      - itau-desafio-network
+
+  itau-desafio-app:
+    image: gabxdevv/itau-unibanco-desafio-de-programacao:0.0.1
+    container_name: itau-desafio-app
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+      - "8089:8089"
+    environment:
+      DB_HOST: itau-desafio-mysql
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_PORT: 3306
+      DB_NAME: desafio-itau
+      TZ: UTC
     networks:
       - itau-desafio-network
 
