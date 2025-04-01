@@ -5,11 +5,52 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      TZ: ${TIME_ZONE}
+      TZ: UTC
     command: --default-time-zone='+00:00'
     ports:
       - "3306:3306"
     volumes:
       - gabxdev-db:/var/lib/mysql
+    networks:
+      - itau-desafio-network
+
+  prometheus:
+    image: prom/prometheus:v2.53.4
+    container_name: itau-desafio-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - itau-desafio-network
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    container_name: itau-desafio-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_PROVISIONING_DATASOURCES_DEFAULT_UID: prometheus_ds
+      DS_PROMETHEUS: prometheus_ds
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - grafana-data-itau:/var/lib/grafana
+    networks:
+      - itau-desafio-network
+
 volumes:
   gabxdev-db:
+    driver: local
+  grafana-data-itau:
+    driver: local
+
+networks:
+  itau-desafio-network:
+    driver: bridge

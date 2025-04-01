@@ -27,7 +27,7 @@ logging:
 
 management:
   server:
-    port: 9090
+    port: 8089
   endpoints:
     web:
       exposure:
@@ -37,6 +37,3 @@ management:
       show-details: always
     info:
       show-details: always
-
-springdoc:
-  show-actuator: true
